@@ -1,0 +1,1 @@
+/home/user/Desktop/fix_trivy_issues_2025-07-11_07-24-03.sh
