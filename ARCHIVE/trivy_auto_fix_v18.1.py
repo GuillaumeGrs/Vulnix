@@ -45,7 +45,7 @@ desktop_path = os.path.expanduser("~/Desktop")
 if not os.path.exists(desktop_path):
     os.makedirs(desktop_path)
 
-API_KEY = "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"
+API_KEY = "XXX"
 MODEL_NAME = "gpt-4.1-nano"
 OUTPUT_PATH = os.path.join(desktop_path, "trivy_auto_report.json")
 FIX_SCRIPT_PATH = os.path.join(desktop_path, "fix_trivy_issues.sh")
