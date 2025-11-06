@@ -49,7 +49,7 @@ else:
 
 # --- TRIVY SCAN LOGIC ---
 
-API_KEY = "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"
+API_KEY = "XXX"
 MODEL_NAME = "gpt-4.1-nano"
 LIGHT_SCAN_DIRS = ["/etc", "/usr/bin", "/usr/lib", "/usr/local/bin"]
 FULL_SCAN_DIRS = ["/"]
