@@ -1,13 +1,4 @@
 #!/usr/bin/env python3
-'''
-█  █▀  ▄   █▄▄▄▄ ██     ▄▀  ▄███▄   
-█▄█     █  █  ▄▀ █ █  ▄▀    █▀   ▀  
-█▀▄  █   █ █▀▀▌  █▄▄█ █ ▀▄  ██▄▄    
-█  █ █   █ █  █  █  █ █   █ █▄   ▄▀ 
-  █  █▄ ▄█   █      █  ███  ▀███▀   
- ▀    ▀▀▀   ▀      █                
-                  ▀                 
-'''
 # === IMPORTS ===
 # These are required to handle JSON, run shell commands, parse arguments, and manage paths
 import json
