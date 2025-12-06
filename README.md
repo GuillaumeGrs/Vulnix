@@ -235,7 +235,7 @@ L’auteur décline toute responsabilité en cas de dommages causés à vos syst
 
 ## 👤 Auteur & Licence
 
-- **Auteur** : `[Votre Nom / Pseudo]`
+- **Auteur** : `GuillaumeGrs`
 - **Licence** : `MIT`
 
 ---
