@@ -34,7 +34,7 @@ Pas besoin d'installer Python ou des librairies.
 
 Voici comment vérifier la puissance de VULNIX en 3 minutes sur une machine vierge.
 
-### Prérequis
+### 1. Prérequis
 VULNIX a besoin du moteur Trivy et d'une clé API Gemini.
 
 ```bash
@@ -47,7 +47,7 @@ sudo apt-get update && sudo apt-get install trivy
 # Configurer votre clé API (Gratuite via Google AI Studio)
 export GEMINI_API_KEY="votre_clé_ici"
 
-### Créer un "Piège" (Vulnérabilité simulée)
+### 2. Créer un "Piège" (Vulnérabilité simulée)
 
 Nous allons créer un dossier contenant une demande pour une très vieille librairie Python (2018), connue pour ses failles.
 
@@ -73,28 +73,29 @@ Exécutez VULNIX en ciblant ce dossier.
 
 VULNIX a généré un script du type `VULNIX_fix_DATE.sh`. Lancez-le.
 
-Bash
 
-```
+
 # Remplacez les XXXXX par les chiffres de votre fichier
+
+```bash
 sudo ./VULNIX_fix_XXXXXX.sh ./VULNIX_report_XXXXXX.json
 ```
 
 👉 **Action :** Le script va analyser le problème. Pour des raisons de sécurité, il ne modifiera pas le fichier `requirements.txt` automatiquement (risque de casse applicative), mais il vous avertira dans les logs qu'une action manuelle est requise.
 
-````
 
-### Validation et Info Dev
-
-```markdown
 ### 5. Validation finale
 Modifiez le fichier pour simuler l'action du développeur (comme suggéré par l'outil) et relancez le scan.
 
-```bash
-# On met à jour vers une version sûre
-echo "requests>=2.31.0" > ~/demo_vuln/requirements.txt
 
+# On met à jour vers une version sûre
+
+```bash
+echo "requests>=2.31.0" > ~/demo_vuln/requirements.txt
+```
 # On re-scan le dossier
+
+```bash
 ./vulnix --path ~/demo_vuln
 ````
 
