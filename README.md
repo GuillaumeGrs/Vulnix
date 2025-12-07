@@ -53,10 +53,9 @@ Nous allons créer un dossier contenant une demande pour une très vieille libra
 
 mkdir ~/demo_vuln
 # On demande expressément une version vulnérable
-
 ```bash
 echo "requests==2.19.0" > ~/demo_vuln/requirements.txt
-```
+
 
 ### Tutoriel (Scan et Correction)
 
@@ -111,9 +110,9 @@ Si vous souhaitez modifier le code source ou comprendre la logique :
     
 2. Installez les dépendances :
     
-    Bash
     
-    ```
+    
+    ```Bash
     pip install google-generativeai rich pyfiglet questionary jinja2
     ```
     
