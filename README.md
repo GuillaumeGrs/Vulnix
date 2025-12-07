@@ -61,7 +61,7 @@ echo "requests==2.19.0" > ~/demo_vuln/requirements.txt
 
 ````
 
-### 📋 BLOC 3 : Tutoriel (Scan et Correction)
+### Tutoriel (Scan et Correction)
 
 ```markdown
 ### 3. Lancer le Scan
@@ -88,7 +88,7 @@ sudo ./VULNIX_fix_XXXXXX.sh ./VULNIX_report_XXXXXX.json
 
 ````
 
-### 📋 BLOC 4 : Validation et Info Dev
+### Validation et Info Dev
 
 ```markdown
 ### 5. Validation finale
