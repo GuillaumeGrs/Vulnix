@@ -34,7 +34,7 @@ Pas besoin d'installer Python ou des librairies.
 
 Voici comment vérifier la puissance de VULNIX en 3 minutes sur une machine vierge.
 
-### 1. Prérequis
+### Prérequis
 VULNIX a besoin du moteur Trivy et d'une clé API Gemini.
 
 ```bash
@@ -43,23 +43,20 @@ sudo apt-get install wget apt-transport-https gnupg lsb-release
 wget -qO - [https://aquasecurity.github.io/trivy-repo/deb/public.key](https://aquasecurity.github.io/trivy-repo/deb/public.key) | sudo apt-key add -
 echo deb [https://aquasecurity.github.io/trivy-repo/deb](https://aquasecurity.github.io/trivy-repo/deb) $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
 sudo apt-get update && sudo apt-get install trivy
-
-# 2. Configurer votre clé API (Gratuite via Google AI Studio)
+```
+# Configurer votre clé API (Gratuite via Google AI Studio)
 export GEMINI_API_KEY="votre_clé_ici"
 
-### 2. Créer un "Piège" (Vulnérabilité simulée)
+### Créer un "Piège" (Vulnérabilité simulée)
 
 Nous allons créer un dossier contenant une demande pour une très vieille librairie Python (2018), connue pour ses failles.
 
-Bash
-
-```
 mkdir ~/demo_vuln
 # On demande expressément une version vulnérable
+
+```bash
 echo "requests==2.19.0" > ~/demo_vuln/requirements.txt
 ```
-
-````
 
 ### Tutoriel (Scan et Correction)
 
