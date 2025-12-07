@@ -120,7 +120,35 @@ Si vous souhaitez modifier le code source ou comprendre la logique :
     pip install google-generativeai rich pyfiglet questionary jinja2
     ```
     
-3. Le fichier principal est `trivy_auto_fix_vGemini.py`.
+3. Le fichier principal est `Vulnix-TestVersion.py`.
     
 
 Amusez-vous bien !
+
+---
+
+## 👤 À Propos & Philosophie
+
+Ce projet est maintenu par **[@GuillaumeGRS](https://github.com/GuillaumeGRS)**.
+
+**L'objectif de VULNIX** est de démocratiser l'automatisation de la sécurité défensive. En couplant un scanner éprouvé (**Trivy**) avec la flexibilité de l'**IA Générative**, ce projet vise à réduire drastiquement le temps entre la détection d'une CVE et sa correction effective (MTTR). 
+
+Il s'agit d'une initiative personnelle **Open Source**, conçue pour être portable, transparente et facile à auditer.
+
+### 🤝 Contribuer
+Ce projet est vivant ! Si vous souhaitez améliorer les prompts de l'IA, ajouter le support d'autres gestionnaires de paquets (dnf, pacman) ou optimiser le code :
+* Les **Pull Requests** sont les bienvenues.
+* N'hésitez pas à me contacter ou à ouvrir une **Issue** pour discuter d'idées.
+
+---
+
+## ⚖️ Disclaimer (Avertissement)
+
+**VULNIX est un outil puissant qui exécute des commandes avec des privilèges élevés (`sudo`).**
+
+Bien que des mécanismes de sécurité soient en place (mode Dry-Run, vérification d'OS, non-modification des fichiers applicatifs), l'auteur décline toute responsabilité en cas de dommages, pertes de données ou instabilités système causés par l'utilisation de cet outil ou des scripts générés.
+
+* 🔴 **Ne lancez jamais** de scripts de correction en production sans les avoir testés au préalable.
+* ✅ L'utilisateur est seul responsable de la validation des commandes suggérées par l'IA.
+
+*Licence : Ce projet est distribué sous licence MIT - Utilisez-le, modifiez-le, apprenez-en !*
