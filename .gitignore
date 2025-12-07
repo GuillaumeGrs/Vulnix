@@ -1,0 +1,12 @@
+﻿__pycache__/
+*.pyc
+build/
+dist/
+*.spec
+trivy_env/
+venv/
+.env
+API.txt
+*.json
+*.html
+*.sh
