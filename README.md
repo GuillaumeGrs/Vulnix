@@ -6,6 +6,8 @@ Il combine la puissance de **Trivy** (scanner de vulnérabilités) avec l'IA de 
 
 Son but ? Non seulement détecter les failles, mais **générer automatiquement des scripts de correction sécurisés** en Bash à exécuter pour résoudre les CVE.
 
+> 💬 **Une question ? Une suggestion ?** [Sauter directement à la section Contact](#-contact--suggestions)
+
 ![Status](https://img.shields.io/badge/Status-Stable-green) ![Platform](https://img.shields.io/badge/Platform-Linux-black) ![AI](https://img.shields.io/badge/AI-Gemini-blue)
 
 ---
@@ -160,3 +162,18 @@ Bien que des mécanismes de sécurité soient en place (mode Dry-Run, vérificat
 * ✅ L'utilisateur est seul responsable de la validation des commandes suggérées par l'IA.
 
 *Licence : Ce projet est distribué sous licence MIT - Utilisez-le, modifiez-le, apprenez !*
+
+---
+
+## 📬 Contact & Suggestions
+
+Votre avis compte ! VULNIX est un projet en constante évolution et j'adorerais avoir vos retours.
+
+Que ce soit pour :
+* 🐛 Signaler un bug
+* 💡 Proposer une nouvelle fonctionnalité
+* 🗣️ Discuter cybersécurité ou du code
+* 👋 Simplement dire bonjour
+
+N'hésitez pas à m'écrire à :
+**📧 `vulnix@lilo.org`**
