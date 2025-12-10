@@ -25,11 +25,11 @@ Ce dépôt contient deux choses :
 Pas besoin d'installer Python ou des librairies.
 
 1.  Allez dans la section **[Releases](https://github.com/GuillaumeGrs/Vulnix/releases/tag/v2.3)** (à droite de cette page).
-2.  Téléchargez le fichier **`vulnix`**.
+2.  Téléchargez le fichier **`Vulnix`**.
 3.  Transférez-le sur votre machine Linux (VM Debian, Ubuntu, Kali...).
 4.  Rendez-le exécutable :
     ```bash
-    chmod +x vulnix
+    chmod +x Vulnix
     ```
 
 ---
@@ -41,11 +41,17 @@ Voici comment vérifier la puissance de VULNIX en 3 minutes sur une machine vier
 VULNIX a besoin du moteur Trivy et d'une clé API Gemini.
 
 ```bash
-# Installation Trivy (Sur Debian/Ubuntu)
-sudo apt-get install wget apt-transport-https gnupg lsb-release
-wget -qO - [https://aquasecurity.github.io/trivy-repo/deb/public.key](https://aquasecurity.github.io/trivy-repo/deb/public.key) | sudo apt-key add -
-echo deb [https://aquasecurity.github.io/trivy-repo/deb](https://aquasecurity.github.io/trivy-repo/deb) $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
-sudo apt-get update && sudo apt-get install trivy
+# Installer Trivy 
+sudo apt-get install wget apt-transport-https gnupg lsb-release -y
+
+# Téléchargement de la clé de sécurité
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo gpg --dearmor -o /usr/share/keyrings/trivy.gpg
+
+# Ajout du dépôt
+echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb bookworm main" | sudo tee /etc/apt/sources.list.d/trivy.list
+
+# Installation
+sudo apt-get update && sudo apt-get install trivy -y
 ```
 Pour plus d'info sur Trivy, n'hésitez pas à consulter : https://trivy.dev/docs/latest/guide/scanner/vulnerability/
 
@@ -58,7 +64,7 @@ Pour utiliser les fonctions d'IA de VULNIX, vous avez besoin d'une clé API Goog
 3.  Cliquez sur le bouton bleu **"Get API key"** (en haut à gauche).
 4.  Cliquez sur **"Create API key in new project"**.
 5.  Copiez la clé (elle commence par `AIza...`) et configurez-la dans votre terminal.
-6.  N'oubliez pas : 
+6.  N'oubliez pas d'export votre clef : 
 ```bash
 export GEMINI_API_KEY="votre_clé_ici"
 ```
@@ -77,7 +83,7 @@ echo "requests==2.19.0" > ~/demo_vuln/requirements.txt
 Exécutez VULNIX en ciblant ce dossier.
 
 ```bash
-./vulnix --path ~/demo_vuln
+./Vulnix --path ~/demo_vuln
 ````
 
 👉 **Résultat :** VULNIX va détecter des vulnérabilités (HIGH/MEDIUM), générer un rapport HTML, et vous proposer de générer un script de correction. **Répondez "Oui"**.
@@ -94,29 +100,58 @@ VULNIX a généré un script du type `VULNIX_fix_DATE.sh`. Lancez-le.
 sudo ./VULNIX_fix_XXXXXX.sh ./VULNIX_report_XXXXXX.json
 ```
 
-👉 **Action :** Le script va analyser le problème. Pour des raisons de sécurité, il ne modifiera pas le fichier `requirements.txt` automatiquement (risque de casse applicative), mais il vous avertira dans les logs qu'une action manuelle est requise.
+👉 **Action :** Le script va analyser le problème et va identifier la librairie vulnérable et forcer sa mise à jour automatique via pip, en contournant les restrictions si nécessaire pour garantir la sécurité immédiate du système.
 
-
-### 5. Validation finale
-Modifiez le fichier pour simuler l'action du développeur (comme suggéré par l'outil) et relancez le scan.
-
-
-### On met à jour vers une version sûre
-
-```bash
-echo "requests>=2.31.0" > ~/demo_vuln/requirements.txt
-```
-### On re-scan le dossier
+### 5. Validation finale (Le "Green Light")
+Maintenant que le patch est appliqué, relancez simplement VULNIX pour constater la disparition des failles critiques.
 
 ```bash
 ./vulnix --path ~/demo_vuln
-````
-
-✅ **Victoire :** Le rapport affichera **"System is CLEAN"** (0 vulnérabilités).
+```
+✅ Résultat : La vulnérabilité critique a disparu. Le système est patché.  😎
 
 ---
 
-## 👨💻 Pour les Développeurs
+# 🕹️ Modes d'Opération
+
+VULNIX n'est pas seulement un outil en ligne de commande, c'est aussi une application interactive.  
+Lancez-le sans argument pour accéder au menu principal :
+
+```bash
+./Vulnix
+```
+
+Vous aurez accès à **3 modes de scan distincts** :
+
+---
+
+### 🚀 Full System Scan
+
+**Cible :** La racine du système (`/`)  
+**Usage :** Audit de sécurité complet et approfondi  
+**Note :** Peut être long selon la taille du disque
+
+---
+
+### ⚡ Light Scan (Critical System Dirs)
+
+**Cible :** Seulement les dossiers sensibles :  
+`/bin`, `/sbin`, `/usr/bin`, `/etc`  
+
+**Usage :** Vérification rapide (*"Sanity Check"*) pour s'assurer qu'aucun binaire système n'est compromis ou obsolète.
+
+---
+
+### 🎯 Custom Directory Scan
+
+**Cible :** Un dossier spécifique choisi par l'utilisateur  
+**Usage :** Idéal pour :  
+- Scanner un projet de développement  
+- Vérifier un environnement virtuel  
+- Analyser un conteneur monté  
+
+
+# 👨💻 Pour les Développeurs
 
 Si vous souhaitez modifier le code source ou comprendre la logique :
 
@@ -124,11 +159,9 @@ Si vous souhaitez modifier le code source ou comprendre la logique :
     
 2. Installez les dépendances :
     
-    
-    
-    ```Bash
-    pip install google-generativeai rich pyfiglet questionary jinja2
-    ```
+```Bash
+pip install google-generativeai rich pyfiglet questionary jinja2
+```
     
 3. Le fichier principal est `Vulnix-TestVersion.py`.
     
@@ -137,7 +170,7 @@ Amusez-vous bien !
 
 ---
 
-## 👤 À Propos & Philosophie
+# 👤 À Propos & Philosophie
 
 Ce projet est maintenu par **[@GuillaumeGRS](https://github.com/GuillaumeGRS)**.
 
@@ -145,14 +178,14 @@ Ce projet est maintenu par **[@GuillaumeGRS](https://github.com/GuillaumeGRS)**.
 
 Il s'agit d'une initiative personnelle **Open Source**, conçue pour être portable, transparente et facile à auditer.
 
-### 🤝 Contribuer
+# 🤝 Contribuer
 Ce projet est vivant ! Si vous souhaitez améliorer les prompts de l'IA, ajouter le support d'autres gestionnaires de paquets (dnf, pacman) ou optimiser le code :
 * Les **Pull Requests** sont les bienvenues.
 * N'hésitez pas à me contacter ou à ouvrir une **Issue** pour discuter d'idées.
 
 ---
 
-## ⚖️ Disclaimer (Avertissement)
+# ⚖️ Disclaimer 
 
 **VULNIX est un outil puissant qui exécute des commandes avec des privilèges élevés (`sudo`).**
 
@@ -165,7 +198,7 @@ Bien que des mécanismes de sécurité soient en place (mode Dry-Run, vérificat
 
 ---
 
-## 📬 Contact & Suggestions
+# 📬 Contact & Suggestions
 
 Votre avis compte ! VULNIX est un projet en constante évolution et j'adorerais avoir vos retours.
 
