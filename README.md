@@ -92,23 +92,25 @@ Exécutez VULNIX en ciblant ce dossier.
 
 VULNIX a généré un script du type `VULNIX_fix_DATE.sh`. Lancez-le.
 
-
-
-### Remplacez les XXXXX par les chiffres de votre fichier
-
-```bash
+```Bash
+# Remplacez les XXXXX par les chiffres de votre fichier
 sudo ./VULNIX_fix_XXXXXX.sh ./VULNIX_report_XXXXXX.json
 ```
 
-👉 **Action :** Le script va analyser le problème et va identifier la librairie vulnérable et forcer sa mise à jour automatique via pip, en contournant les restrictions si nécessaire pour garantir la sécurité immédiate du système.
+👉 **Action :** Le script va analyser le problème. Pour des raisons de sécurité, il ne modifiera pas le fichier `requirements.txt` automatiquement (risque de casse applicative), mais il vous avertira dans les logs qu'une action manuelle est requise.
 
-### 5. Validation finale (Le "Green Light")
-Maintenant que le patch est appliqué, relancez simplement VULNIX pour constater la disparition des failles critiques.
+### 5. Validation finale
+Modifiez le fichier pour simuler l'action du développeur (comme suggéré par l'outil) et relancez le scan.
 
 ```bash
+# On met à jour vers une version sûre
+echo "requests>=2.32.4" > ~/demo_vuln/requirements.txt
+
+# On re-scan le dossier
 ./vulnix --path ~/demo_vuln
-```
-✅ Résultat : La vulnérabilité critique a disparu. Le système est patché.  😎
+````
+
+✅ **Victoire :** Le rapport affichera **"System is CLEAN"** (0 vulnérabilités).
 
 ---
 
