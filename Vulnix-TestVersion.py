@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 """
-VULNIX v2.3 - AI-Powered Vulnerability Scanner & Auto-Remediator (Test Version)
-Author: You
-Description: Combines Trivy, Gemini AI, and a Hacker-style TUI for vulnerability management.
-             Includes Experimental HTML Reporting Dashboard.
+VULNIX TEST VERSION
+"""
+"""
+Merci de vous intéresser à Vulnix :)
 """
 
 import sys
