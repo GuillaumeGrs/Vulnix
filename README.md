@@ -69,48 +69,55 @@ Pour utiliser les fonctions d'IA de VULNIX, vous avez besoin d'une clé API Goog
 export GEMINI_API_KEY="votre_clé_ici"
 ```
 > **Astuce :** Pour ne pas avoir à taper cette commande à chaque fois, ajoutez-la dans votre fichier de configuration (`~/.bashrc` ou `~/.zshrc`).
+
 ### 2. Créer un "Piège" (Vulnérabilité simulée)
 
-Nous allons créer un dossier contenant une demande pour une très vieille librairie Python (2018), connue pour ses failles.
+Créons un environnement de test isolé contenant une demande explicite pour une très vieille librairie Python (2018), connue pour ses failles critiques.
 ```bash
 mkdir ~/demo_vuln
 ```
-### On demande expressément une version vulnérable
+Nous injectons la faille en demandant expressément une version vulnérable :
 ```bash
 echo "requests==2.19.0" > ~/demo_vuln/requirements.txt
 ```
-### 3. Lancer le Scan
-Exécutez VULNIX en ciblant ce dossier.
+### 3. Lancer le Scan (Mode Précis)
+Lancez VULNIX en ciblant ce dossier.
+> **Astuce 💡  :**  Utilisez $(realpath ...) ou le chemin absolu. Cela permet au module de réparation (le "Limier") de retrouver exactement où se trouve le fichier source infecté sur le disque.
 
 ```bash
-./Vulnix --path ~/demo_vuln
-````
+./vulnix --path $(realpath ~/demo_vuln)
+```
+👉 Résultat : VULNIX détecte les vulnérabilités, génère un rapport HTML, et vous demande : Do you want Gemini to generate a fix script?. Répondez "Oui" (Yes).
 
-👉 **Résultat :** VULNIX va détecter des vulnérabilités (HIGH/MEDIUM), générer un rapport HTML, et vous proposer de générer un script de correction. **Répondez "Oui"**.
+### 4. Appliquer la Correction Hybride
+VULNIX a généré un script de remédiation intelligent (ex: VULNIX_fix_TIMESTAMP.sh). Lancez-le avec les droits d'administration.
 
-### 4. Appliquer la Correction
-
-VULNIX a généré un script du type `VULNIX_fix_DATE.sh`. Lancez-le.
-
-```Bash
-# Remplacez les XXXXX par les chiffres de votre fichier
-sudo ./VULNIX_fix_XXXXXX.sh ./VULNIX_report_XXXXXX.json
+> Utilisez la touche TAB pour compléter le nom du fichier
+```bash
+sudo ./VULNIX_fix_2025XXXX.sh ./VULNIX_report_2025XXXX.json
 ```
 
-👉 **Action :** Le script va analyser le problème. Pour des raisons de sécurité, il ne modifiera pas le fichier `requirements.txt` automatiquement (risque de casse applicative), mais il vous avertira dans les logs qu'une action manuelle est requise.
+👉 Ce qu'il se passe (La magie VULNIX) :
 
-### 5. Validation finale
-Modifiez le fichier pour simuler l'action du développeur (comme suggéré par l'outil) et relancez le scan.
+**Runtime Fix (Automatique) :** Le script force l'installation de la version sécurisée (ex: requests 2.32.4) directement dans le système, en contournant les restrictions si nécessaire pour stopper la faille immédiate
+
+**Persistence Check (Le Limier) :** Le script vérifie ensuite votre fichier source requirements.txt. Il détecte qu'il contient toujours l'ancienne version (2.19.0) et vous avertit : "⚠️ Persistence Mismatch Detected".
+
+### 5. Validation et Persistance
+Le système est sauf (la librairie est à jour en mémoire), mais votre code source déclare encore l'ancienne version. Pour éviter que la faille ne revienne à la prochaine réinstallation, corrigez votre fichier 
+> Vulnix ne le fait pas automatiquement par souci de sécurité
 
 ```bash
-# On met à jour vers une version sûre
 echo "requests>=2.32.4" > ~/demo_vuln/requirements.txt
+```
+### 6. Validation finale (Green Light)
+On re-scan ce qu'on viens de corriger
+```bash
+./vulnix --path $(realpath ~/demo_vuln)
+```
+*Mais que va-t-il se passer ? 🥁*
 
-# On re-scan le dossier
-./vulnix --path ~/demo_vuln
-````
-
-✅ **Victoire :** Le rapport affichera **"System is CLEAN"** (0 vulnérabilités).
+✅ Victoire : Le rapport affiche "System is CLEAN" (0 vulnérabilités). La sécurité est assurée en production ET dans le code.
 
 ---
 
