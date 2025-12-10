@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnix</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            transform: translateY(-10vh);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            animation: fadeIn 1s ease-out;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 30px rgba(79, 172, 254, 0.3);
+        }
+
+        .shield-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 0 15px rgba(79, 172, 254, 0.3));
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: rgba(79, 172, 254, 0.15);
+            transform: translateY(-2px);
+            border-color: rgba(79, 172, 254, 0.3);
+            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(-10vh);
+            }
+        }
+
+        .cursor-glow {
+            position: fixed;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle at center, rgba(79, 172, 254, 0.8) 0%, rgba(79, 172, 254, 0.2) 60%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            filter: blur(30px);
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <div class="container">
+        <svg class="shield-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#4facfe;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <path
+                d="M12 2L4 5.34783V10.5706C4 16.0375 7.7725 21.1032 12 23C16.2275 21.1032 20 16.0375 20 10.5706V5.34783L12 2Z"
+                fill="url(#shieldGradient)" />
+        </svg>
+        <h1>Vulnix</h1>
+        <div class="buttons">
+            <a href="https://github.com/GuillaumeGrs/Vulnix" class="btn" target="_blank">GitHub Project</a>
+            <button id="emailBtn" class="btn" onclick="copyEmail()">Contact Email</button>
+        </div>
+    </div>
+
+    <script>
+        const cursorGlow = document.getElementById('cursorGlow');
+        document.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
+        });
+
+        function copyEmail() {
+            const email = 'vulnix@lilo.org';
+            navigator.clipboard.writeText(email).then(() => {
+                const btn = document.getElementById('emailBtn');
+                const originalText = btn.textContent;
+                btn.textContent = 'Email Copied!';
+                btn.style.borderColor = '#4CAF50';
+                btn.style.color = '#4CAF50';
+
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.borderColor = '';
+                    btn.style.color = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+
+</html>
