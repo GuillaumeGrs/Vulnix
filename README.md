@@ -37,6 +37,8 @@ Pas besoin d'installer Python ou des librairies.
 
 Voici comment vérifier la puissance de VULNIX en 3 minutes sur une machine vierge.
 
+> 🐧 **Recommandation :** Pour une expérience optimale (et profiter du Dashboard HTML), testez VULNIX sur une **VM Debian avec Interface Graphique**.
+
 ### 1. Prérequis
 VULNIX a besoin du moteur Trivy et d'une clé API Gemini.
 
